@@ -1,0 +1,72 @@
+public Person updatePerson(Person person){
+
+    EmailValidator validator = EmailValidator.getInstance();
+
+    if (dbPerson.isPresent()) {
+        personToUpdate = dbPerson.get();
+    }
+    else {
+        throw new IllegalArgumentException("Person doesn't exists");
+    }
+    personToUpdate.setFirstName(person.getFirstName());
+    personToUpdate.setLastName(person.getLastName());
+    personToUpdate.setTelephone(person.getTelephone());
+    personToUpdate.setZipCode(person.getZipCode());
+    personToUpdate.setState(person.getState());
+    personToUpdate.setStreetNumberLine1(person.getStreetNumberLine1());
+    personToUpdate.setStreetNumberLine2(person.getStreetNumberLine2());
+    personToUpdate.setCity(person.getCity());
+    personToUpdate.setEmail(person.getEmail());
+    if ( !validator.isValid(person.getEmail())) {
+        throw new IllegalArgumentException("Email is not a valid email!");
+    }
+
+
+
+    return personRepository.save(personToUpdate);
+
+}
+
+@Test
+public void testUpdatePerson() {
+    Person newPerson = new Person();
+    newPerson.setFirstName("Sam");
+    newPerson.setLastName("Bell");
+    newPerson.setStreetNumberLine1("1234 NW 56th st");
+    newPerson.setStreetNumberLine2("apt 789");
+    newPerson.setCity("Columbus");
+    newPerson.setState("OH");
+    newPerson.setZipCode("12345");
+    newPerson.setTelephone("123-456-7890");
+    newPerson.setEmail("sam.bell@accenture.com");
+    newPerson.setRecordID(1);
+    when(personRepository.save(newPerson)).thenReturn(newPerson);
+    when(personRepository.findByRecordID(newPerson.getRecordID())).thenReturn(newPerson);
+    personRepository.save(newPerson);
+    Person person = personService.updatePerson(newPerson);
+    person.setFirstName("Juan");
+    person.setCity("Florida");
+    assertEquals("Juan", newPerson.getFirstName());
+    assertEquals("Florida", newPerson.getCity());
+
+
+}
+
+
+@PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA)
+public ResponseEntity<Object> updatePersonInfo(@Valid Person person) {
+    String outputReadout = className + Thread.currentThread().getStackTrace()[1].getMethodName() + " ";
+    log.info(START + outputReadout);
+    try {
+        personServiceImpl.updatePerson(person);
+        log.info(SUCCESS + outputReadout + HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Record ID: " + person.getRecordID() + "\nRegistration Updated", HttpStatus.ACCEPTED);
+    } catch (Exception e) {
+        log.error(ERROR + outputReadout + HttpStatus.INTERNAL_SERVER_ERROR + " " + e.toString());
+        return new ResponseEntity<>( "Registration Rejected",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;

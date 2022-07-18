@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface POCRepo extends MongoRepository<Employee, String> {
 
-  List<Employee> findByFirst_name(String first_name);
+//  List<Employee> findByFirst_name(String first_name);
   List<Employee> findAll();
 
   int deleteByEid(String eid);

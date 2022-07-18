@@ -23,10 +23,10 @@ public class POCImpl implements POCImplInt {
   public List<Employee> getAllEmployees() {
     return pocRepo.findAll();
   }
-  @Override
-  public List<Employee> getEmployeeByFirst_name(String first_name) {
-    return pocRepo.findByFirst_name(first_name);
-  }
+//  @Override
+//  public List<Employee> getEmployeeByFirst_name(String first_name) {
+//    return pocRepo.findByFirst_name(first_name);
+//  }
 
   public Employee updateEmployee(Employee employee) {
     Employee employeeToUpdate;

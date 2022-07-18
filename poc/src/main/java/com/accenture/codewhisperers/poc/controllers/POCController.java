@@ -11,26 +11,26 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-@AllArgsConstructor
+//@AllArgsConstructor
 @RestController
 @Slf4j
 public class POCController {
-  @Autowired
   private final String className = getClass().getSimpleName() + ".";
   private static final String START = "INIT ";
   private static final String SUCCESS = "PASS ";
   private static final String ERROR = "WARN ";
+  @Autowired
   private POCImpl pocImpl;
 
-  @GetMapping("/findAll")
+  @GetMapping("/")
   public List<Employee> getAll(){
     return pocImpl.getAllEmployees();
   }
 
-  @GetMapping("/findByFirst_name/{first_name}")
-  public List<Employee> getByFirstName(@PathVariable String first_name) {
-    return pocImpl.getEmployeeByFirst_name(first_name);
-  }
+//  @GetMapping("/findByFirst_name/{first_name}")
+//  public List<Employee> getByFirstName(@PathVariable String first_name) {
+//    return pocImpl.getEmployeeByFirst_name(first_name);
+//  }
 
   @PutMapping(value = "/update")
   public ResponseEntity<Object> updateEmployeeInfo(Employee employee) {

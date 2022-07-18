@@ -7,5 +7,5 @@ import java.util.List;
 public interface POCImplInt {
   List<Employee> getAllEmployees();
 
-  List<Employee> getEmployeeByFirst_name(String first_name);
+//  List<Employee> getEmployeeByFirst_name(String first_name);
 }

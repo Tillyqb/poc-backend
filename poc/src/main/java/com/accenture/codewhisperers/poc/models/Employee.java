@@ -19,6 +19,23 @@ public class Employee {
   private String eid;
   private String first_name;
   private String second_name;
+  private String id_number;
+
+  public Employee(String id, String eid, String first_name, String second_name, String id_number) {
+    this.id = id;
+    this.eid = eid;
+    this.first_name = first_name;
+    this.second_name = second_name;
+    this.id_number = id_number;
+  }
+
+  public void setId_number(String id_number) {
+    this.id_number = id_number;
+  }
+
+  public String getId_number() {
+    return id_number;
+  }
 
   public void setEid(String eid) {
     this.eid = eid;
